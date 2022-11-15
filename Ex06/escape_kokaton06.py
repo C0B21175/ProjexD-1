@@ -1,9 +1,10 @@
 import pygame as pg
+from tkinter import messagebox as tkm
 import sys
 from random import randint
-import tkinter.messagebox as tkm
 coin_0 = [0, 0, 0, 0, 0]
 bomblist = [0]
+
 class Screen:
     def __init__(self, title, wh, bgimg):
         pg.display.set_caption(title) #逃げろ！こうかとん
@@ -84,7 +85,7 @@ class Coin:
     def update(self, scr:Screen):
         self.blit(scr)
 
-    def teleport(self, scr:Screen):
+    def teleport(self, scr:Screen):#コインの移動
         self.rct.centerx = randint(200, scr.rct.width-200)
         self.rct.centery = randint(200, scr.rct.height-200)
         self.blit(scr)
@@ -183,16 +184,16 @@ def main():
                 if len(bomblist) <= i:#爆弾がi個以下なら
                     bomblist.append(Bomb((255, 0, 0), 10, (+1, +1), scr))#爆弾を1個増やす
 
-
         # 練習8
         for i in range(len(bomblist)):
             if kkt.rct.colliderect(bomblist[i].rct): # こうかとんrctが爆弾rctと重なったら
+                tkm.showinfo("GAME OVER", "こうかとんはなくなった")#C0B21159追加
                 return
 
-        for i in range(len(coin_0)):# こうかとんrctがcoin[i]と重なったら
-            if kkt.rct.colliderect(coin_0[i].rct):
-                score.up_score(coin_0[i].get_value())
-                coin_0[i].teleport(scr)
+        for i in coin_0:# こうかとんrctがcoin[i]と重なったら
+            if kkt.rct.colliderect(i.rct):
+                score.up_score(i.get_value())
+                i.teleport(scr)
                 
         pg.display.update() #練習2
         clock.tick(1000)
@@ -202,4 +203,4 @@ if __name__ == "__main__":
     pg.init() # 初期化
     main()    # ゲームの本体
     pg.quit() # 初期化の解除
-    sys.exit()#test
+    sys.exit()
