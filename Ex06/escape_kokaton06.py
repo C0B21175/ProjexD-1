@@ -1,6 +1,7 @@
 import pygame as pg
 import sys
 from random import randint
+import tkinter.messagebox as tkm
 coin_0 = [0, 0, 0, 0, 0]
 bomblist = [0]
 class Screen:
@@ -201,4 +202,4 @@ if __name__ == "__main__":
     pg.init() # 初期化
     main()    # ゲームの本体
     pg.quit() # 初期化の解除
-    sys.exit()
+    sys.exit()#test
